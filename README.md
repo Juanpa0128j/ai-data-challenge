@@ -11,7 +11,7 @@ The goal of this repository is to develop an Artificial Intelligence (AI) soluti
 
 ## Overview
 
-This project aims to leverage advanced AI techniques, including traditional machine learning, language models, or hybrid approaches, to achieve accurate and explainable classification of medical articles. The solution will be evaluated based on its ability to correctly assign articles to the appropriate categories using the provided dataset.
+This project aims to leverage traditional machine learning techniques to achieve accurate and explainable classification of medical articles. Specifically, we will use **Logistic Regression** as the primary model for multi-label classification. The solution will be evaluated based on its ability to correctly assign articles to the appropriate categories using the provided dataset.
 
 ## Dataset
 
@@ -23,22 +23,38 @@ The dataset consists of the following fields:
 
 ## Approach
 
-The repository will explore various strategies to achieve the classification goal, including:
+The repository will implement the following steps to achieve the classification goal:
 
-1. **Traditional Machine Learning**: Using techniques like TF-IDF and logistic regression.
-2. **Pre-trained Language Models**: Fine-tuning models like BioBERT or PubMedBERT.
-3. **Hybrid Approaches**: Combining domain-specific features with contextual embeddings.
-4. **Large Language Models (LLMs)**: Utilizing models like GPT for zero-shot or few-shot classification.
+1. **Data Preprocessing**:
+   - Combine the `title` and `abstract` fields into a single text field.
+   - Clean the text by removing stopwords, punctuation, and applying tokenization.
+   - Encode the target variable (`group`) into a binary matrix for multi-label classification.
+
+2. **Feature Extraction**:
+   - Use TF-IDF (Term Frequency-Inverse Document Frequency) to convert the text into numerical features.
+
+3. **Model Training**:
+   - Train a Logistic Regression model using the `OneVsRestClassifier` strategy for multi-label classification.
+
+4. **Evaluation**:
+   - Evaluate the model using metrics such as precision, recall, F1-score, and accuracy.
+
+5. **Model Saving**:
+   - Save the trained model, TF-IDF vectorizer, and label encoder for future use.
 
 ## Deliverables
 
-- A well-documented codebase implementing the chosen solution(s).
+- A well-documented codebase implementing the Logistic Regression solution.
 - Evaluation metrics to measure the effectiveness of the model.
 - Insights and justifications for the chosen approach.
 
 ## Future Work
 
-This repository will serve as a baseline for further exploration and improvement in the field of medical literature classification. Contributions and suggestions are welcome to enhance the solution.
+This repository will serve as a baseline for further exploration and improvement in the field of medical literature classification. Future enhancements may include:
+
+- Experimenting with hyperparameter tuning to optimize the Logistic Regression model.
+- Exploring advanced techniques such as pre-trained language models (e.g., BioBERT) for improved performance.
+- Incorporating domain-specific features using medical ontologies.
 
 ## Authors
 

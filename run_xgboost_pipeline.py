@@ -283,7 +283,7 @@ def evaluate_model(model_path: str, test_data_path: Optional[str] = None,
         print(f"Report saved to: {report_path}")
         print("\nReport Summary:")
         print("-" * 40)
-        basic_metrics = results['test_metrics']
+        basic_metrics = results['basic_metrics']
         print(f"Accuracy: {basic_metrics['accuracy']:.4f}")
         print(f"F1-Macro: {basic_metrics['f1_macro']:.4f}")
         print(f"Hamming Loss: {basic_metrics['hamming_loss']:.4f}")
@@ -330,7 +330,7 @@ def analyze_model(model_path: str, text: Optional[str] = None,
     # Analyze feature importance
     if analyze_features:
         print("\nAnalyzing feature importance...")
-        importance_results = model.analyze_feature_importance(top_n=20)
+        model.analyze_feature_importance(top_n=20)
         print("Feature importance analysis completed and plots saved!")
     
     # Analyze specific text

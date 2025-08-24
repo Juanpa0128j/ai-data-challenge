@@ -176,7 +176,7 @@ class EnhancedXGBoostModel:
         # Get feature importances from each classifier
         importance_dict = {}
         
-        for i, (class_name, estimator) in enumerate(zip(self.classes_, self.model.estimators_)):
+        for (class_name, estimator) in zip(self.classes_, self.model.estimators_):
             if hasattr(estimator, 'feature_importances_'):
                 importances = estimator.feature_importances_
                 
@@ -196,7 +196,7 @@ class EnhancedXGBoostModel:
     
     def _plot_feature_importance(self, importance_dict: Dict[str, Any], top_n: int) -> None:
         """Plot feature importance for each class."""
-        fig, axes = plt.subplots(2, 2, figsize=(16, 12))
+        _, axes = plt.subplots(2, 2, figsize=(16, 12))
         axes = axes.ravel()
         
         for i, (class_name, importance_data) in enumerate(importance_dict.items()):

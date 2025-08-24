@@ -1,0 +1,7 @@
+*.pkl
+.vscode/
+*.pyc
+*.log
+*.png
+*.json
+__pycache__/

@@ -10,11 +10,10 @@ Authors: Juan Pablo Mejía, Samuel Castaño, Mateo Builes
 
 import os
 import sys
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Dict, Any, List
 import json
 from datetime import datetime
 import warnings
@@ -29,7 +28,6 @@ from sklearn.metrics import (
     f1_score, precision_score, recall_score, accuracy_score,
     hamming_loss, jaccard_score
 )
-from sklearn.model_selection import learning_curve, validation_curve
 
 from src.models.enhanced_xgboost import EnhancedXGBoostModel
 

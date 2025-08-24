@@ -1,0 +1,39 @@
+XGBoost Model Comprehensive Report
+============================================================
+Generated on: 2025-08-24 08:49:10
+
+Model Configuration:
+------------------------------
+Model Type: XGBoost with OneVsRestClassifier
+Number of Classes: 4
+Classes: cardiovascular, neurological, hepatorenal, oncological
+Number of Features: 5000
+
+Hyperparameters:
+  n_estimators: 100
+  max_depth: 6
+  learning_rate: 0.1
+  random_state: 42
+
+Performance Summary:
+------------------------------
+Overall Accuracy: 0.8191
+Macro F1-Score: 0.9145
+Micro F1-Score: 0.9212
+Hamming Loss: 0.0498
+
+Class Performance Analysis:
+------------------------------
+Best performing class: Neurological (F1: 0.9407)
+Worst performing class: Hepatorenal (F1: 0.8734)
+
+Recommendations:
+------------------------------
+• Model shows good performance but has room for improvement
+✓ Low prediction error rate
+
+Files Generated:
+------------------------------
+• results/xgboost_comprehensive_evaluation.png
+• results/xgboost_detailed_evaluation.json
+• results/xgboost_evaluation_summary.txt

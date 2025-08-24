@@ -1,0 +1,39 @@
+2025-08-24 08:34:39,406 - XGBoostTrainer - INFO - Starting XGBoost training pipeline...
+2025-08-24 08:34:39,406 - XGBoostTrainer - INFO - Loading data from: data/challenge_data-18-ago.csv
+2025-08-24 08:34:39,439 - XGBoostTrainer - INFO - Data loaded with semicolon separator
+2025-08-24 08:34:39,439 - XGBoostTrainer - INFO - Data loaded successfully. Shape: (3565, 3)
+2025-08-24 08:34:39,439 - XGBoostTrainer - INFO - Columns: ['title', 'abstract', 'group']
+2025-08-24 08:34:39,439 - XGBoostTrainer - INFO - Preprocessing data...
+2025-08-24 08:34:39,440 - XGBoostTrainer - INFO - Input DataFrame columns: ['title', 'abstract', 'group']
+2025-08-24 08:34:39,443 - XGBoostTrainer - INFO - Combined title and abstract columns
+2025-08-24 08:34:40,211 - XGBoostTrainer - INFO - Text vectorization completed. Feature shape: (3565, 5000)
+2025-08-24 08:34:40,211 - XGBoostTrainer - INFO - Processing 'group' column with pipe-separated labels
+2025-08-24 08:34:40,321 - XGBoostTrainer - INFO - Label preparation completed. Label shape: (3565, 4)
+2025-08-24 08:34:40,321 - XGBoostTrainer - INFO - Classes: ['cardiovascular', 'neurological', 'hepatorenal', 'oncological']
+2025-08-24 08:34:40,322 - XGBoostTrainer - INFO - Label distribution: {'cardiovascular': np.int64(1268), 'neurological': np.int64(1785), 'hepatorenal': np.int64(1091), 'oncological': np.int64(601)}
+2025-08-24 08:34:40,322 - XGBoostTrainer - INFO - Sample labels: [['neurological', 'hepatorenal'], ['neurological'], ['hepatorenal'], ['neurological'], ['neurological']]
+2025-08-24 08:34:40,370 - XGBoostTrainer - INFO - Starting model training...
+2025-08-24 08:34:40,371 - XGBoostTrainer - INFO - Creating XGBoost model...
+2025-08-24 08:34:40,371 - XGBoostTrainer - INFO - XGBoost model created with parameters: {'n_estimators': 100, 'max_depth': 6, 'learning_rate': 0.1, 'subsample': 1.0, 'colsample_bytree': 1.0, 'min_child_weight': 1, 'gamma': 0.0, 'reg_alpha': 0.0, 'reg_lambda': 1.0, 'random_state': 42, 'n_jobs': -1, 'eval_metric': 'logloss', 'verbose': False}
+2025-08-24 08:34:56,178 - XGBoostTrainer - INFO - Training completed in: 0:00:15.807280
+2025-08-24 08:34:56,178 - XGBoostTrainer - INFO - Evaluating model...
+2025-08-24 08:34:56,367 - XGBoostTrainer - INFO - Evaluation completed
+2025-08-24 08:34:56,368 - XGBoostTrainer - INFO - accuracy: 0.8191
+2025-08-24 08:34:56,368 - XGBoostTrainer - INFO - f1_macro: 0.9145
+2025-08-24 08:34:56,368 - XGBoostTrainer - INFO - f1_micro: 0.9212
+2025-08-24 08:34:56,368 - XGBoostTrainer - INFO - f1_weighted: 0.9202
+2025-08-24 08:34:56,368 - XGBoostTrainer - INFO - precision_macro: 0.9783
+2025-08-24 08:34:56,368 - XGBoostTrainer - INFO - precision_micro: 0.9730
+2025-08-24 08:34:56,368 - XGBoostTrainer - INFO - recall_macro: 0.8611
+2025-08-24 08:34:56,369 - XGBoostTrainer - INFO - recall_micro: 0.8746
+2025-08-24 08:34:56,369 - XGBoostTrainer - INFO - roc_auc_macro: 0.9731
+2025-08-24 08:34:56,369 - XGBoostTrainer - INFO - roc_auc_micro: 0.9781
+2025-08-24 08:34:56,369 - XGBoostTrainer - INFO - Performing 5-fold cross-validation...
+2025-08-24 08:34:56,369 - XGBoostTrainer - INFO - Creating XGBoost model...
+2025-08-24 08:34:56,370 - XGBoostTrainer - INFO - XGBoost model created with parameters: {'n_estimators': 100, 'max_depth': 6, 'learning_rate': 0.1, 'subsample': 1.0, 'colsample_bytree': 1.0, 'min_child_weight': 1, 'gamma': 0.0, 'reg_alpha': 0.0, 'reg_lambda': 1.0, 'random_state': 42, 'n_jobs': -1, 'eval_metric': 'logloss', 'verbose': False}
+2025-08-24 08:35:55,960 - XGBoostTrainer - INFO - f1_macro: 0.8825 (+/- 0.0052)
+2025-08-24 08:36:54,914 - XGBoostTrainer - INFO - f1_micro: 0.8909 (+/- 0.0064)
+2025-08-24 08:37:53,997 - XGBoostTrainer - INFO - accuracy: 0.7598 (+/- 0.0198)
+2025-08-24 08:37:54,112 - XGBoostTrainer - INFO - Model saved to: models/xgboost_model.pkl
+2025-08-24 08:37:54,114 - XGBoostTrainer - INFO - Results saved to: results/xgboost_results.json
+2025-08-24 08:37:54,114 - XGBoostTrainer - INFO - Pipeline completed in: 0:03:14.708817

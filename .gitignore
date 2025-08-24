@@ -2,6 +2,7 @@
 .vscode/
 *.pyc
 *.log
+*.txt
 *.png
 *.json
 __pycache__/

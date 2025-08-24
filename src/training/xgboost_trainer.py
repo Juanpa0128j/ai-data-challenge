@@ -30,6 +30,7 @@ from sklearn.metrics import (
     classification_report, f1_score, accuracy_score, 
     precision_score, recall_score, roc_auc_score
 )
+from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 
 # Try to import XGBoost
 try:
@@ -145,11 +146,16 @@ class XGBoostTrainer:
         else:
             raise ValueError(f"No suitable text column found. Available columns: {df.columns.tolist()}")
         
+        # Define custom stop words
+        custom_stop_words = ['organ', 'interplay', 'connections', 'insights', 'perspective', 
+                             'improves', 'patterns', 'secrets', 'markers', 'symptons']
+        combined_stop_words = list(ENGLISH_STOP_WORDS.union(custom_stop_words))
+
         # Vectorize text using TF-IDF
         self.vectorizer = TfidfVectorizer(
             max_features=self.config.max_features,
             ngram_range=(1, 2),
-            stop_words='english',
+            stop_words=combined_stop_words,
             lowercase=True,
             strip_accents='ascii'
         )
@@ -441,9 +447,9 @@ class XGBoostTrainer:
         """
         if param_grid is None:
             param_grid = {
-                'estimator__n_estimators': [50, 100, 200],
-                'estimator__max_depth': [4, 6, 8],
-                'estimator__learning_rate': [0.05, 0.1, 0.2]
+                'estimator__n_estimators': [50, 100, 200, 300, 400],
+                'estimator__max_depth': [4, 6, 8, 10, 12],
+                'estimator__learning_rate': [0.05, 0.1, 0.2, 0.3, 0.4]
             }
         
         self.logger.info("Starting hyperparameter search...")
@@ -586,7 +592,7 @@ def main():
         print("Performing hyperparameter search...")
         df = trainer.load_data()
         X, y = trainer.preprocess_data(df)
-        X_train, X_test, y_train, y_test = train_test_split(
+        X_train, _, y_train, _ = train_test_split(
             X, y, test_size=config.test_size, random_state=config.random_state
         )
         search_results = trainer.hyperparameter_search(X_train, y_train)

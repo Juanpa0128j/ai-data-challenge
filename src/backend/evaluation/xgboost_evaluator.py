@@ -29,7 +29,7 @@ from sklearn.metrics import (
     hamming_loss, jaccard_score
 )
 
-from src.models.enhanced_xgboost import EnhancedXGBoostModel
+from src.backend.models.enhanced_xgboost import EnhancedXGBoostModel
 
 
 class XGBoostEvaluator:

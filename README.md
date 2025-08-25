@@ -1,67 +1,317 @@
-# XGBoost Training Pipeline
-
-Una pipeline completa para entrenar y evaluar modelos XGBoost en la clasificación de literatura médica.
-
-## Estructura del Proyecto
-
 # Medical AI Dashboard - XGBoost Literature Classification
 
 ![Dashboard Preview](https://img.shields.io/badge/Status-Ready_for_V0-success)
 ![Model](https://img.shields.io/badge/Model-XGBoost-orange)
 ![API](https://img.shields.io/badge/API-Flask%2FNext.js-blue)
+![Last Update](https://img.shields.io/badge/Last_Update-August_2025-green)
 
-## 🎯 Resumen Ejecutivo
+## Resúmen
 
 Dashboard profesional para clasificación automática de literatura médica usando XGBoost. Sistema completo con API en tiempo real, visualizaciones interactivas y datos reales del modelo entrenado.
 
-### ✨ Características Principales
+### Características 
 - **4 Categorías Médicas:** Cardiovascular, Neurológico, Hepatorenal, Oncológico
 - **Predicciones en Tiempo Real** con API Flask/Next.js
 - **Visualizaciones Interactivas** con métricas de rendimiento
 - **Datos Reales** del modelo entrenado (3,565 muestras)
 - **Deployment Ready** para Vercel/GitHub Pages
 
-## 📊 Rendimiento del Modelo
+## ¿Cómo ejecutar?
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/Juanpa0128j/ai-data-challenge.git
+cd ai-data-challenge
+
+# 2. Iniciar la aplicación (todo en uno)
+bash start.sh
+```
+
+El script `start.sh` realiza automáticamente:
+- Creación de un entorno virtual de Python
+- Instalación de todas las dependencias (Python y Node.js)
+- Verificación de la instalación de XGBoost
+- Inicio del servidor API Flask y el frontend Next.js
+
+Una vez iniciado, accede a:
+- **Frontend**: http://localhost:3000
+- **API**: http://localhost:5000/api/health
+
+## Mejor rendimiento alcanzado
 
 | Métrica | Valor |
 |---------|-------|
-| **Accuracy** | 85.47% |
-| **Precision** | 82.34% |
-| **Recall** | 78.91% |
-| **F1-Score** | 80.58% |
+| **Accuracy** | 80.79% |
+| **Precision (Macro)** | 97.02% |
+| **Recall (Macro)** | 85.62% |
+| **F1-Score (Macro)** | 90.78% |
+| **ROC-AUC (Macro)** | 97.40% |
 | **Muestras** | 3,565 |
 
-## Estructura del proyecto [WIP]
+### Rendimiento por Categoría
+
+| Categoría | Precisión | Recall | F1-Score |
+|-----------|-----------|--------|----------|
+| **Cardiovascular** | 97.42% | 89.37% | 93.22% |
+| **Neurológico** | 93.82% | 93.30% | 93.56% |
+| **Hepatorenal** | 98.81% | 76.50% | 86.23% |
+| **Oncológico** | 98.04% | 83.33% | 90.09% |
+
+### Resultados de Cross-Validation
+
+| Métrica | Valor Medio | Desviación Std |
+|---------|------------|----------------|
+| **Accuracy** | 74.86% | ±1.73% |
+| **F1-Score (Macro)** | 87.67% | ±0.99% |
+| **F1-Score (Micro)** | 88.43% | ±0.92% |
+
+**Tiempo de entrenamiento:** 17 minutos, 15 segundos
+
+## API Endpoints
+
+La API Flask proporciona los siguientes endpoints para interactuar con el modelo:
+
+### Health Check
+
+```http
+GET /api/health
+```
+
+Verifica el estado de la API y si el modelo está cargado correctamente.
+
+**Respuesta:**
+```json
+{
+  "status": "healthy",
+  "model_loaded": true,
+  "vectorizer_loaded": true,
+  "timestamp": "2025-08-25T15:30:45.279319"
+}
+```
+
+### Predicción
+
+```http
+POST /api/predict
+```
+
+Realiza una predicción de categorías médicas para un texto.
+
+**Body:**
+```json
+{
+  "text": "Adrenoleukodystrophy: survey of 303 cases: biochemistry, diagnosis, and therapy."
+}
+```
+
+**Respuesta:**
+```json
+{
+  "text": "Adrenoleukodystrophy: survey of 303 cases: biochemistry, diagnosis, and therapy.",
+  "predictions": [
+    {
+      "category": "neurological",
+      "probability": 0.92,
+      "predicted": true,
+      "confidence": "Alta"
+    },
+    {
+      "category": "cardiovascular",
+      "probability": 0.12,
+      "predicted": false,
+      "confidence": "Baja"
+    },
+    {
+      "category": "hepatorenal",
+      "probability": 0.08,
+      "predicted": false,
+      "confidence": "Baja"
+    },
+    {
+      "category": "oncological",
+      "probability": 0.03,
+      "predicted": false,
+      "confidence": "Baja"
+    }
+  ],
+  "feature_importance": [
+    {
+      "feature": "adrenoleukodystrophy",
+      "value": 1.0,
+      "importance": 0.034
+    }
+  ],
+  "prediction_summary": {
+    "total_categories": 1,
+    "max_probability": 0.92,
+    "primary_category": "neurological"
+  },
+  "timestamp": "2025-08-25T15:31:12.456789"
+}
+```
+
+### Información del Modelo
+
+```http
+GET /api/model-info
+```
+
+Obtiene información detallada sobre el modelo cargado.
+
+**Respuesta:**
+```json
+{
+  "model_type": "OneVsRestClassifier",
+  "categories": ["cardiovascular", "neurological", "hepatorenal", "oncological"],
+  "n_features": 5000,
+  "model_params": {
+    "n_estimators": 200,
+    "max_depth": 8,
+    "learning_rate": 0.05
+  },
+  "training_info": {
+    "algorithm": "XGBoost",
+    "task_type": "Multi-label Classification",
+    "text_processing": "TF-IDF Vectorization"
+  }
+}
+```
+
+### Ejemplos de Demostración
+
+```http
+GET /api/demo-examples
+```
+
+Proporciona ejemplos predefinidos para probar el modelo.
+
+### Estadísticas
+
+```http
+GET /api/statistics
+```
+
+Obtiene estadísticas detalladas del modelo y dataset, incluyendo métricas de rendimiento.
+
+## Uso del Dashboard
+
+El dashboard Next.js proporciona una interfaz intuitiva para:
+
+1. **Predicciones en tiempo real**: Ingresar texto médico y ver resultados de clasificación
+2. **Visualización de métricas**: Gráficos de rendimiento del modelo
+3. **Ejemplos predefinidos**: Casos de prueba para demostración
+4. **Explicabilidad**: Visualización de características importantes
+
+## Estructura del proyecto
 
 ```
-├── config/
-│   └── xgboost_config.py          # Configuraciones del modelo
+├── data/
+│   └── challenge_data-18-ago.csv  # Dataset para entrenamiento
+├── models/
+│   └── xgboost_model.pkl          # Modelo entrenado serializado
+├── results/
+│   └── xgboost_results.json       # Resultados y métricas del modelo
+├── logs/                          # Logs de entrenamiento y ejecución
 ├── src/
-│   ├── training/
-│   │   └── xgboost_trainer.py     # Pipeline de entrenamiento
-│   ├── models/
-│   │   └── enhanced_xgboost.py    # Modelo XGBoost mejorado
-│   └── evaluation/
-│       └── xgboost_evaluator.py   # Evaluación y métricas
-├── models/                        # Modelos entrenados
-├── results/                       # Resultados y visualizaciones
-├── run_xgboost_pipeline.py        # Script principal
-└── requirements_xgboost.txt       # Dependencias
+│   ├── api/
+│   │   └── api.py                 # API Flask para predicciones
+│   ├── backend/
+│   │   ├── config/
+│   │   │   └── xgboost_config.py  # Configuraciones del modelo
+│   │   ├── training/
+│   │   │   └── xgboost_trainer.py # Pipeline de entrenamiento
+│   │   ├── models/
+│   │   │   └── enhanced_xgboost.py # Modelo XGBoost mejorado
+│   │   └── evaluation/
+│   │       └── xgboost_evaluator.py # Evaluación y métricas
+│   └── frontend/                  # Aplicación Next.js
+│       ├── app/                   # Estructura App Router de Next.js
+│       │   ├── api/               # API Routes de Next.js
+│       │   │   ├── demo-examples/ # Ejemplos de demostración
+│       │   │   ├── health/        # Endpoint de estado
+│       │   │   ├── predict/       # Endpoint de predicción
+│       │   │   └── statistics/    # Endpoint de estadísticas
+│       │   ├── page.tsx           # Página principal del dashboard
+│       │   └── layout.tsx         # Layout principal
+│       ├── components/            # Componentes React reutilizables
+│       │   └── ui/                # Componentes de interfaz 
+│       ├── lib/                   # Utilidades y funciones auxiliares
+│       └── public/                # Archivos estáticos
+├── run_xgboost_pipeline.py        # Script principal para entrenamiento y evaluación
+├── start.sh                       # Script para iniciar API y frontend
+└── requirements.txt               # Dependencias del proyecto
 ```
 
 ## Instalación
 
-1. Instalar dependencias:
+### Requisitos del sistema
+
+- Python 3.9+
+- Node.js 18+ (para el frontend)
+- pip (gestor de paquetes de Python)
+- npm (gestor de paquetes de Node.js)
+
+### Métodos de instalación
+
+#### Método 1: Script automatizado (recomendado)
+
+El script `start.sh` automatiza todo el proceso de instalación e inicio:
+
 ```bash
-pip install -r requirements_xgboost.txt
+# Ejecutar el script automatizado
+bash start.sh
 ```
 
-2. Verificar instalación de XGBoost:
+Este script realiza las siguientes tareas:
+1. Crea un entorno virtual de Python
+2. Instala todas las dependencias de Python
+3. Verifica la instalación de XGBoost
+4. Instala las dependencias de Next.js
+5. Inicia tanto el API Flask como el frontend Next.js
+
+#### Método 2: Instalación manual
+
+Si prefieres instalar manualmente:
+
+1. Crear y activar un entorno virtual:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate  # En Windows: venv\Scripts\activate
+```
+
+2. Instalar dependencias de Python:
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Verificar instalación de XGBoost:
+
 ```bash
 python -c "import xgboost; print(f'XGBoost version: {xgboost.__version__}')"
 ```
 
-## Uso
+4. Instalar dependencias del frontend:
+
+```bash
+cd src/frontend
+npm install
+```
+
+5. Iniciar servicios por separado:
+
+```bash
+# Terminal 1: API
+cd src/api
+python api.py
+
+# Terminal 2: Frontend
+cd src/frontend
+npm run dev
+```
+
+# Uso del backend para manipular el modelo
 
 ### 1. Entrenar el Modelo
 
@@ -138,6 +388,9 @@ python run_xgboost_pipeline.py compare-configs
 - **Estimadores**: 200
 - **Profundidad**: 8
 - **Learning Rate**: 0.05
+- **Subsample**: 0.8
+- **Colsample Bytree**: 0.8
+- **Reg Alpha**: 0.1
 - **Early Stopping**: 15 rondas
 
 ### `regularized`
@@ -153,10 +406,17 @@ if XGBOOST_AVAILABLE:
     self.models['XGBoost'] = OneVsRestClassifier(
         XGBClassifier(
             random_state=42,
-            n_estimators=100,
-            max_depth=6,
-            learning_rate=0.1,
-            eval_metric='logloss'
+            n_estimators=200,
+            max_depth=8,
+            learning_rate=0.05,
+            subsample=0.8,
+            colsample_bytree=0.8,
+            min_child_weight=1,
+            gamma=0.0,
+            reg_alpha=0.1,
+            reg_lambda=1.0,
+            eval_metric='logloss',
+            early_stopping_rounds=15
         )
     )
 ```
@@ -204,75 +464,61 @@ if XGBOOST_AVAILABLE:
 - **Label Ranking Loss**: Error de ranking
 - **Frecuencia de etiquetas**: Distribución real vs predicha
 
-## Configuración Avanzada
+## 🧪 Uso Avanzado del Pipeline
 
-### Personalizar hiperparámetros:
-```python
-from config.xgboost_config import XGBoostConfig
+La herramienta de línea de comandos `run_xgboost_pipeline.py` permite realizar diversas operaciones:
 
-custom_config = XGBoostConfig(
-    n_estimators=300,
-    max_depth=10,
-    learning_rate=0.03,
-    reg_alpha=0.1,
-    reg_lambda=1.5,
-    subsample=0.8,
-    colsample_bytree=0.8
-)
-
-trainer = XGBoostTrainer(custom_config)
+```bash
+# Ver opciones disponibles
+python run_xgboost_pipeline.py --help
 ```
 
-### Búsqueda de hiperparámetros personalizada:
-```python
-param_grid = {
-    'estimator__n_estimators': [100, 200, 300],
-    'estimator__max_depth': [6, 8, 10],
-    'estimator__learning_rate': [0.03, 0.1, 0.2],
-    'estimator__reg_alpha': [0, 0.1, 0.5],
-    'estimator__reg_lambda': [1, 1.5, 2]
-}
+### Entrenar con distintas configuraciones
 
-search_results = trainer.hyperparameter_search(X_train, y_train, param_grid)
+```bash
+# Configuración por defecto
+python run_xgboost_pipeline.py train
+
+# Configuración de alto rendimiento
+python run_xgboost_pipeline.py train --config high_performance
+
+# Búsqueda de hiperparámetros
+python run_xgboost_pipeline.py train --hyperparameter-search
 ```
 
-## Interpretabilidad del Modelo
+### Evaluación detallada
 
-### Análisis SHAP (requiere `pip install shap`):
-```python
-# Explicar predicción específica
-explanation = model.explain_prediction_shap(
-    text="Patient presents with neurological symptoms",
-    plot=True
-)
+```bash
+# Evaluación completa del modelo
+python run_xgboost_pipeline.py evaluate --model-path models/xgboost_model.pkl
 
-# Ver características más importantes
-print("Top contributing features:")
-for class_name, data in explanation.items():
-    print(f"{class_name}: {data['top_features'][:5]}")
+# Evaluación con datos específicos
+python run_xgboost_pipeline.py evaluate --model-path models/xgboost_model.pkl --data-path data/custom_test_data.csv
 ```
 
-### Importancia de características:
-```python
-# Analizar importancia global
-importance_results = model.analyze_feature_importance(top_n=30)
+### Explicabilidad
 
-# Ver características más importantes por clase
-for class_name, data in importance_results.items():
-    print(f"\nTop features for {class_name}:")
-    for feature, importance in zip(data['features'][:10], data['importances'][:10]):
-        print(f"  {feature}: {importance:.4f}")
+```bash
+# Análisis SHAP para explicaciones
+python run_xgboost_pipeline.py analyze --model-path models/xgboost_model.pkl --interactive
 ```
 
-## Monitoreo y Logs
+#  Contribuciones
 
-Los logs se generan automáticamente durante el entrenamiento y incluyen:
-- Progreso del entrenamiento
-- Métricas de validación
-- Tiempo de ejecución
-- Errores y advertencias
+¡Las contribuciones son bienvenidas! Sigue estos pasos:
 
-Ubicación: `results/xgboost_training_YYYYMMDD_HHMMSS.log`
+1. Fork el repositorio
+2. Crea una rama (`git checkout -b feature/nueva-funcionalidad`)
+3. Haz commit de tus cambios (`git commit -m 'Añadir nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request
+
+## Guías para contribuir
+
+- Mantén el estilo de código consistente
+- Añade tests para nuevas funcionalidades
+- Actualiza la documentación según sea necesario
+- Sigue las convenciones de commits semánticos
 
 ## Licencia
 

@@ -22,10 +22,10 @@ warnings.filterwarnings('ignore')
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
 try:
-    from src.training.xgboost_trainer import XGBoostTrainer
-    from src.models.enhanced_xgboost import EnhancedXGBoostModel
-    from src.evaluation.xgboost_evaluator import XGBoostEvaluator
-    from config.xgboost_config import get_config, CONFIGS
+    from src.backend.training.xgboost_trainer import XGBoostTrainer
+    from src.backend.models.enhanced_xgboost import EnhancedXGBoostModel
+    from src.backend.evaluation.xgboost_evaluator import XGBoostEvaluator
+    from src.backend.config.xgboost_config import get_config, CONFIGS
 except ImportError as e:
     print(f"Import error: {e}")
     print("Make sure all required modules are available and XGBoost is installed.")
@@ -348,7 +348,7 @@ def analyze_model(model_path: str, text: Optional[str] = None,
         # Try SHAP explanation if available
         try:
             print("\nGenerating SHAP explanation...")
-            shap_results = model.explain_prediction_shap(text)
+            model.explain_prediction_shap(text)
             print("SHAP explanation completed and plots saved!")
         except ImportError:
             print("SHAP not available for detailed explanation. Install with: pip install shap")
@@ -387,24 +387,24 @@ def main():
         description='XGBoost Training Pipeline for Medical Literature Classification',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-Examples:
-  # Train with default configuration
-  python run_xgboost_pipeline.py train
+        Examples:
+        # Train with default configuration
+        python run_xgboost_pipeline.py train
 
-  # Train with high performance configuration
-  python run_xgboost_pipeline.py train --config high_performance
+        # Train with high performance configuration
+        python run_xgboost_pipeline.py train --config high_performance
 
-  # Train with custom data path and hyperparameter search
-  python run_xgboost_pipeline.py train --data-path data/my_data.csv --hyperparameter-search
+        # Train with custom data path and hyperparameter search
+        python run_xgboost_pipeline.py train --data-path data/my_data.csv --hyperparameter-search
 
-  # Evaluate a trained model
-  python run_xgboost_pipeline.py evaluate --model-path models/xgboost_model.pkl
+        # Evaluate a trained model
+        python run_xgboost_pipeline.py evaluate --model-path models/xgboost_model.pkl
 
-  # Analyze model with specific text
-  python run_xgboost_pipeline.py analyze --model-path models/xgboost_model.pkl --text "Patient shows symptoms..."
+        # Analyze model with specific text
+        python run_xgboost_pipeline.py analyze --model-path models/xgboost_model.pkl --text "Patient shows symptoms..."
 
-  # Compare configurations
-  python run_xgboost_pipeline.py compare-configs
+        # Compare configurations
+        python run_xgboost_pipeline.py compare-configs
         """
     )
     

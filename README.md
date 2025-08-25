@@ -4,7 +4,6 @@ Una pipeline completa para entrenar y evaluar modelos XGBoost en la clasificaci�
 
 ## Estructura del Proyecto
 
-```
 # Medical AI Dashboard - XGBoost Literature Classification
 
 ![Dashboard Preview](https://img.shields.io/badge/Status-Ready_for_V0-success)
@@ -36,7 +35,7 @@ Dashboard profesional para clasificación automática de literatura médica usan
 
 ### 1. V0 Dashboard (5 minutos)
 Ve a **https://v0.dev** y usa este prompt:
-```
+
 Crea un dashboard médico profesional para XGBoost de clasificación de literatura médica.
 
 COMPONENTES PRINCIPALES:

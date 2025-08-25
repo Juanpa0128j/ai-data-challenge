@@ -13,16 +13,18 @@ export async function GET() {
     try {
       const basicData = fs.readFileSync(basicResultsPath, 'utf8');
       basicResults = JSON.parse(basicData);
-    } catch (error) {
-      console.warn('Could not read basic results file:', error.message);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.warn('Could not read basic results file:', errorMessage);
       basicResults = null;
     }
     
     try {
       const detailedData = fs.readFileSync(detailedResultsPath, 'utf8');
       detailedResults = JSON.parse(detailedData);
-    } catch (error) {
-      console.warn('Could not read detailed results file:', error.message);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.warn('Could not read detailed results file:', errorMessage);
       detailedResults = null;
     }
     

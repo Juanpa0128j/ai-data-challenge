@@ -4,7 +4,6 @@ Una pipeline completa para entrenar y evaluar modelos XGBoost en la clasificaci�
 
 ## Estructura del Proyecto
 
-```
 # Medical AI Dashboard - XGBoost Literature Classification
 
 ![Dashboard Preview](https://img.shields.io/badge/Status-Ready_for_V0-success)
@@ -32,43 +31,9 @@ Dashboard profesional para clasificación automática de literatura médica usan
 | **F1-Score** | 80.58% |
 | **Muestras** | 3,565 |
 
-## 🚀 Quick Start para V0 + Vercel
+## Estructura del proyecto [WIP]
 
-### 1. V0 Dashboard (5 minutos)
-Ve a **https://v0.dev** y usa este prompt:
 ```
-Crea un dashboard médico profesional para XGBoost de clasificación de literatura médica.
-
-COMPONENTES PRINCIPALES:
-1. Header con "Medical AI Dashboard" y métricas en cards (Accuracy 85%, Precision 82%, etc.)
-2. Predictor en tiempo real: textarea + botón "Predecir" + resultados con probabilidades
-3. Matriz de confusión como heatmap interactivo 4x4
-4. Gráfico de barras horizontales con importancia de características
-5. Line charts con curvas de entrenamiento (loss/accuracy vs iteraciones)
-6. Galería de ejemplos médicos con casos reales
-
-CONEXIÓN API: 
-- POST /api/predict para predicciones {"text": "texto médico"}
-- GET /api/statistics para métricas del modelo
-- GET /api/demo-examples para ejemplos médicos
-
-ESTILO: Tema médico profesional (azul #2563eb, blanco), responsive, animaciones suaves
-```
-
-### 2. Conectar con Vercel (10 minutos)
-```bash
-# Después de generar en V0, copiar nuestras API routes
-cp -r vercel/api/* [proyecto-v0]/pages/api/
-# o para App Router: cp -r vercel/api/* [proyecto-v0]/app/api/
-
-# Deploy a Vercel
-cd [proyecto-v0]
-vercel --prod
-```
-
-### 3. URLs Finales
-- **Dashboard:** https://tu-proyecto.vercel.app
-- **API:** https://tu-proyecto.vercel.app/api/predict
 ├── config/
 │   └── xgboost_config.py          # Configuraciones del modelo
 ├── src/
@@ -203,54 +168,6 @@ if XGBOOST_AVAILABLE:
 - **Feature importance**: Análisis detallado de características
 - **Early stopping**: Previene sobreentrenamiento
 
-## API Programática
-
-### Entrenamiento básico:
-```python
-from src.training.xgboost_trainer import XGBoostTrainer
-from config.xgboost_config import get_config
-
-# Cargar configuración
-config = get_config('high_performance')
-
-# Entrenar modelo
-trainer = XGBoostTrainer(config)
-results = trainer.run_full_pipeline(
-    data_path='data/mi_dataset.csv',
-    perform_cv=True
-)
-
-print(f"F1-Score: {results['test_metrics']['f1_macro']:.4f}")
-```
-
-### Análisis del modelo:
-```python
-from src.models.enhanced_xgboost import EnhancedXGBoostModel
-
-# Cargar modelo entrenado
-model = EnhancedXGBoostModel('models/xgboost_model.pkl')
-
-# Hacer predicción
-result = model.predict_single("Patient shows cardiovascular symptoms")
-print(f"Predicted labels: {result['predicted_labels']}")
-
-# Analizar importancia de características
-importance = model.analyze_feature_importance(top_n=20)
-```
-
-### Evaluación comprensiva:
-```python
-from src.evaluation.xgboost_evaluator import XGBoostEvaluator
-
-# Evaluar modelo
-evaluator = XGBoostEvaluator('models/xgboost_model.pkl')
-results = evaluator.comprehensive_evaluation(X_test, y_test)
-
-# Generar reporte
-report = evaluator.generate_model_report()
-print(report)
-```
-
 ## Salidas y Resultados
 
 ### Archivos generados durante entrenamiento:
@@ -356,86 +273,6 @@ Los logs se generan automáticamente durante el entrenamiento y incluyen:
 - Errores y advertencias
 
 Ubicación: `results/xgboost_training_YYYYMMDD_HHMMSS.log`
-
-## Extensiones Posibles
-
-### 1. Validación cruzada estratificada:
-```python
-from sklearn.model_selection import StratifiedKFold
-
-# Implementar en trainer personalizado
-skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-cv_results = trainer.cross_validate(X, y, cv=skf)
-```
-
-### 2. Optimización bayesiana:
-```python
-# Requiere: pip install optuna
-import optuna
-
-def objective(trial):
-    config = XGBoostConfig(
-        n_estimators=trial.suggest_int('n_estimators', 50, 300),
-        max_depth=trial.suggest_int('max_depth', 3, 10),
-        learning_rate=trial.suggest_float('learning_rate', 0.01, 0.3),
-    )
-    # ... entrenamiento y evaluación
-    return f1_score
-
-study = optuna.create_study(direction='maximize')
-study.optimize(objective, n_trials=100)
-```
-
-### 3. Ensemble con otros modelos:
-```python
-from sklearn.ensemble import VotingClassifier
-
-# Combinar XGBoost con otros modelos
-ensemble = VotingClassifier([
-    ('xgb', xgboost_model),
-    ('rf', random_forest_model),
-    ('lr', logistic_regression_model)
-], voting='soft')
-```
-
-## Troubleshooting
-
-### Problemas comunes:
-
-1. **XGBoost no se instala**:
-```bash
-# En Windows
-conda install -c conda-forge xgboost
-
-# En Linux/Mac
-pip install --upgrade pip
-pip install xgboost
-```
-
-2. **Error de memoria**:
-```python
-# Reducir max_features en configuración
-config.max_features = 2000
-
-# O usar procesamiento por lotes
-# Implementar en trainer personalizado
-```
-
-3. **SHAP muy lento**:
-```python
-# Usar muestras más pequeñas
-explainer = shap.TreeExplainer(estimator)
-shap_values = explainer.shap_values(X_sample[:100])
-```
-
-4. **Convergencia lenta**:
-```python
-# Aumentar learning_rate
-config.learning_rate = 0.2
-# O reducir regularización
-config.reg_alpha = 0.0
-config.reg_lambda = 1.0
-```
 
 ## Licencia
 

@@ -23,9 +23,7 @@ build
 *.pem
 .vscode/
 __pycache__/
-models/
 logs/
-results/
 
 # debug
 npm-debug.log*

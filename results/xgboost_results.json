@@ -1,0 +1,102 @@
+{
+  "config": {
+    "n_estimators": 200,
+    "max_depth": 8,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "min_child_weight": 1,
+    "gamma": 0.0,
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "random_state": 42,
+    "n_jobs": -1,
+    "eval_metric": "logloss",
+    "early_stopping_rounds": 15,
+    "verbose": false,
+    "max_features": 5000,
+    "test_size": 0.2,
+    "validation_split": 0.2,
+    "data_path": "data/challenge_data-18-ago.csv",
+    "model_save_path": "models/xgboost_model.pkl",
+    "results_path": "results/xgboost_results.json"
+  },
+  "data_shape": {
+    "total_samples": 3565,
+    "features": 5000,
+    "train_samples": 2852,
+    "test_samples": 713
+  },
+  "test_metrics": {
+    "accuracy": 0.8078541374474053,
+    "f1_macro": 0.9077627464872301,
+    "f1_micro": 0.9148230088495575,
+    "f1_weighted": 0.913550533289533,
+    "precision_macro": 0.9702346422969053,
+    "precision_micro": 0.9627473806752037,
+    "recall_macro": 0.8562429932787506,
+    "recall_micro": 0.8714436248682824,
+    "roc_auc_macro": 0.9740103489125871,
+    "roc_auc_micro": 0.9782507460074964,
+    "classification_report": {
+      "cardiovascular": {
+        "precision": 0.9742489270386266,
+        "recall": 0.8937007874015748,
+        "f1-score": 0.9322381930184805,
+        "support": 254.0
+      },
+      "neurological": {
+        "precision": 0.9382022471910112,
+        "recall": 0.9329608938547486,
+        "f1-score": 0.9355742296918768,
+        "support": 358.0
+      },
+      "hepatorenal": {
+        "precision": 0.9880952380952381,
+        "recall": 0.7649769585253456,
+        "f1-score": 0.8623376623376623,
+        "support": 217.0
+      },
+      "oncological": {
+        "precision": 0.9803921568627451,
+        "recall": 0.8333333333333334,
+        "f1-score": 0.9009009009009009,
+        "support": 120.0
+      },
+      "micro avg": {
+        "precision": 0.9627473806752037,
+        "recall": 0.8714436248682824,
+        "f1-score": 0.9148230088495575,
+        "support": 949.0
+      },
+      "macro avg": {
+        "precision": 0.9702346422969053,
+        "recall": 0.8562429932787506,
+        "f1-score": 0.9077627464872301,
+        "support": 949.0
+      },
+      "weighted avg": {
+        "precision": 0.964593632721169,
+        "recall": 0.8714436248682824,
+        "f1-score": 0.913550533289533,
+        "support": 949.0
+      },
+      "samples avg": {
+        "precision": 0.9513791491351099,
+        "recall": 0.9035764375876578,
+        "f1-score": 0.9146663995191344,
+        "support": 949.0
+      }
+    }
+  },
+  "cv_results": {
+    "f1_macro_mean": 0.876650541322429,
+    "f1_macro_std": 0.009869288982037764,
+    "f1_micro_mean": 0.884261599182006,
+    "f1_micro_std": 0.009237731192916095,
+    "accuracy_mean": 0.7485992564598888,
+    "accuracy_std": 0.017254172663665635
+  },
+  "training_time": "0:17:15.426714",
+  "timestamp": "2025-08-25T14:41:45.279319"
+}

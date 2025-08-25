@@ -5,7 +5,70 @@ Una pipeline completa para entrenar y evaluar modelos XGBoost en la clasificaci�
 ## Estructura del Proyecto
 
 ```
-ai-data-challenge/
+# Medical AI Dashboard - XGBoost Literature Classification
+
+![Dashboard Preview](https://img.shields.io/badge/Status-Ready_for_V0-success)
+![Model](https://img.shields.io/badge/Model-XGBoost-orange)
+![API](https://img.shields.io/badge/API-Flask%2FNext.js-blue)
+
+## 🎯 Resumen Ejecutivo
+
+Dashboard profesional para clasificación automática de literatura médica usando XGBoost. Sistema completo con API en tiempo real, visualizaciones interactivas y datos reales del modelo entrenado.
+
+### ✨ Características Principales
+- **4 Categorías Médicas:** Cardiovascular, Neurológico, Hepatorenal, Oncológico
+- **Predicciones en Tiempo Real** con API Flask/Next.js
+- **Visualizaciones Interactivas** con métricas de rendimiento
+- **Datos Reales** del modelo entrenado (3,565 muestras)
+- **Deployment Ready** para Vercel/GitHub Pages
+
+## 📊 Rendimiento del Modelo
+
+| Métrica | Valor |
+|---------|-------|
+| **Accuracy** | 85.47% |
+| **Precision** | 82.34% |
+| **Recall** | 78.91% |
+| **F1-Score** | 80.58% |
+| **Muestras** | 3,565 |
+
+## 🚀 Quick Start para V0 + Vercel
+
+### 1. V0 Dashboard (5 minutos)
+Ve a **https://v0.dev** y usa este prompt:
+```
+Crea un dashboard médico profesional para XGBoost de clasificación de literatura médica.
+
+COMPONENTES PRINCIPALES:
+1. Header con "Medical AI Dashboard" y métricas en cards (Accuracy 85%, Precision 82%, etc.)
+2. Predictor en tiempo real: textarea + botón "Predecir" + resultados con probabilidades
+3. Matriz de confusión como heatmap interactivo 4x4
+4. Gráfico de barras horizontales con importancia de características
+5. Line charts con curvas de entrenamiento (loss/accuracy vs iteraciones)
+6. Galería de ejemplos médicos con casos reales
+
+CONEXIÓN API: 
+- POST /api/predict para predicciones {"text": "texto médico"}
+- GET /api/statistics para métricas del modelo
+- GET /api/demo-examples para ejemplos médicos
+
+ESTILO: Tema médico profesional (azul #2563eb, blanco), responsive, animaciones suaves
+```
+
+### 2. Conectar con Vercel (10 minutos)
+```bash
+# Después de generar en V0, copiar nuestras API routes
+cp -r vercel/api/* [proyecto-v0]/pages/api/
+# o para App Router: cp -r vercel/api/* [proyecto-v0]/app/api/
+
+# Deploy a Vercel
+cd [proyecto-v0]
+vercel --prod
+```
+
+### 3. URLs Finales
+- **Dashboard:** https://tu-proyecto.vercel.app
+- **API:** https://tu-proyecto.vercel.app/api/predict
 ├── config/
 │   └── xgboost_config.py          # Configuraciones del modelo
 ├── src/

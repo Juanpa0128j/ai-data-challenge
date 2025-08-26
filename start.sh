@@ -22,16 +22,16 @@ if ! python3 -m venv --help > /dev/null 2>&1; then
 fi
 
 # Create venv if it doesn't exist
-if [ ! -d "ai-data-challenge" ]; then
+if [ ! -d ".venv" ]; then
     echo "Creating new virtual environment..."
-    python3 -m venv ai-data-challenge
+    python3 -m venv .venv
 else
     echo "Virtual environment already exists."
 fi
 
 # Activate virtual environment
 echo "Activating virtual environment..."
-source ai-data-challenge/bin/activate
+source .venv/bin/activate
 
 # Install Python dependencies
 echo -e "\n${YELLOW}[2/4] Installing Python dependencies...${NC}"
@@ -50,14 +50,14 @@ fi
 # Start the Python API
 echo -e "\n${YELLOW}[4/4] Starting services...${NC}"
 echo "Starting Flask API..."
-cd src/api
+cd src/backend/api
 python api.py &
 API_PID=$!
 echo -e "${GREEN}API started with PID: $API_PID${NC}"
 
 # Navigate to frontend directory and install npm dependencies
 echo "Installing Next.js dependencies..."
-cd ../frontend
+cd ../../frontend
 npm install
 
 # Start Next.js frontend

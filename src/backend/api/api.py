@@ -15,7 +15,7 @@ from datetime import datetime
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 # Importar EnhancedXGBoostModel
-from src.backend.models.enhanced_xgboost import EnhancedXGBoostModel
+from ..models.enhanced_xgboost import EnhancedXGBoostModel
 
 app = Flask(__name__)
 CORS(app)  # Permitir requests desde cualquier origen para desarrollo
@@ -30,7 +30,7 @@ def load_models():
     
     try:
         # Cargar modelo usando EnhancedXGBoostModel
-        model_path = os.path.join(os.path.dirname(__file__), '..', '..', 'models', 'xgboost_model.pkl')
+        model_path = os.path.join(os.path.dirname(__file__), '..', 'models', 'xgboost_model.pkl')
         if os.path.exists(model_path):
             enhanced_model = EnhancedXGBoostModel(model_path)
             print("Modelo XGBoost y componentes cargados exitosamente")
@@ -193,7 +193,7 @@ def get_statistics():
     """Obtener estadísticas del modelo y datos de entrenamiento"""
     try:
         # Cargar estadísticas desde xgboost_results.json
-        stats_path = os.path.join(os.path.dirname(__file__), '..', '..', 'results', 'xgboost_results.json')
+        stats_path = os.path.join(os.path.dirname(__file__), '..', 'results', 'xgboost_results.json')
         if os.path.exists(stats_path):
             with open(stats_path, 'r', encoding='utf-8') as f:
                 results_data = json.load(f)
@@ -215,20 +215,20 @@ def get_statistics():
     except Exception as e:
         return jsonify({'error': f'Error obteniendo estadísticas: {str(e)}'}), 500
 
+print("🚀 Iniciando API Flask para XGBoost...")
+    
+# Cargar modelos al iniciar
+if load_models():
+    print("✅ Modelos cargados correctamente")
+else:
+    print("⚠️ Algunos modelos no pudieron cargarse")
+
+print("🌐 API disponible en:")
+print("   - Health check: http://localhost:5000/api/health")
+print("   - Predicción: http://localhost:5000/api/predict")
+print("   - Info modelo: http://localhost:5000/api/model-info")
+print("   - Ejemplos demo: http://localhost:5000/api/demo-examples")
+print("   - Estadísticas: http://localhost:5000/api/statistics")
+
 if __name__ == '__main__':
-    print("🚀 Iniciando API Flask para XGBoost...")
-    
-    # Cargar modelos al iniciar
-    if load_models():
-        print("✅ Modelos cargados correctamente")
-    else:
-        print("⚠️ Algunos modelos no pudieron cargarse")
-    
-    print("🌐 API disponible en:")
-    print("   - Health check: http://localhost:5000/api/health")
-    print("   - Predicción: http://localhost:5000/api/predict")
-    print("   - Info modelo: http://localhost:5000/api/model-info")
-    print("   - Ejemplos demo: http://localhost:5000/api/demo-examples")
-    print("   - Estadísticas: http://localhost:5000/api/statistics")
-    
     app.run(debug=True, host='0.0.0.0', port=5000)

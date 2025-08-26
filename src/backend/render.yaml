@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: backend-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn api.api:app --bind 0.0.0.0:8000
+    rootDir: .

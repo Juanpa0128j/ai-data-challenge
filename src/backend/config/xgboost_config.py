@@ -38,11 +38,11 @@ class XGBoostConfig:
     max_features: int = 5000
     test_size: float = 0.2
     validation_split: float = 0.2
-    
+
     # Paths
-    data_path: str = "data/challenge_data-18-ago.csv"
-    model_save_path: str = "models/xgboost_model.pkl"
-    results_path: str = "results/xgboost_results.json"
+    data_path: str = "src/backend/data/challenge_data-18-ago.csv"
+    model_save_path: str = "src/backend/models/xgboost_model.pkl"
+    results_path: str = "src/backend/results/xgboost_results.json"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary."""

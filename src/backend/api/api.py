@@ -15,7 +15,7 @@ from datetime import datetime
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 
 # Importar EnhancedXGBoostModel
-from ..models.enhanced_xgboost import EnhancedXGBoostModel
+from models.enhanced_xgboost import EnhancedXGBoostModel
 
 app = Flask(__name__)
 CORS(app)  # Permitir requests desde cualquier origen para desarrollo

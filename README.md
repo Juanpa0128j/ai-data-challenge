@@ -9,6 +9,10 @@
 
 Dashboard profesional para clasificación automática de literatura médica usando XGBoost. Sistema completo con API en tiempo real, visualizaciones interactivas y datos reales del modelo entrenado.
 
+![Flujo del pipeline XGBoost](docs/diagrama.png)
+
+> Para una explicación detallada del proyecto, consulta el informe técnico: [docs/informe_final.pdf](docs/informe_final.pdf)
+
 ### Características 
 - **4 Categorías Médicas:** Cardiovascular, Neurológico, Hepatorenal, Oncológico
 - **Predicciones en Tiempo Real** con API Flask/Next.js
@@ -18,24 +22,11 @@ Dashboard profesional para clasificación automática de literatura médica usan
 
 ## ¿Cómo ejecutar?
 
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/Juanpa0128j/ai-data-challenge.git
-cd ai-data-challenge
+**Despliegue en producción:**
+- **Frontend:** [https://ai-data-challenge.vercel.app/](https://ai-data-challenge.vercel.app/)
+- **API Flask:** [https://ai-data-challenge-9e5b.onrender.com/api/health](https://ai-data-challenge-9e5b.onrender.com/api/health)
 
-# 2. Iniciar la aplicación (todo en uno)
-bash start.sh
-```
-
-El script `start.sh` realiza automáticamente:
-- Creación de un entorno virtual de Python
-- Instalación de todas las dependencias (Python y Node.js)
-- Verificación de la instalación de XGBoost
-- Inicio del servidor API Flask y el frontend Next.js
-
-Una vez iniciado, accede a:
-- **Frontend**: http://localhost:3000
-- **API**: http://localhost:5000/api/health
+Puedes acceder al dashboard y API en producción usando los enlaces anteriores. Para desarrollo local, utiliza los endpoints locales.
 
 ## Mejor rendimiento alcanzado
 
@@ -206,110 +197,47 @@ El dashboard Next.js proporciona una interfaz intuitiva para:
 
 ```
 ├── data/
-│   └── challenge_data-18-ago.csv  # Dataset para entrenamiento
+│   └── challenge_data-18-ago.csv         # Dataset para entrenamiento
 ├── models/
-│   └── xgboost_model.pkl          # Modelo entrenado serializado
-├── results/
-│   └── xgboost_results.json       # Resultados y métricas del modelo
-├── logs/                          # Logs de entrenamiento y ejecución
+│   └── xgboost_model.pkl                 # Modelo entrenado serializado
+├── src/backend/results/
+│   └── xgboost_results.json              # Resultados y métricas del modelo
+├── logs/                                 # Logs de entrenamiento y ejecución
 ├── src/
 │   ├── api/
-│   │   └── api.py                 # API Flask para predicciones
+│   │   └── api.py                        # API Flask para predicciones
 │   ├── backend/
 │   │   ├── config/
-│   │   │   └── xgboost_config.py  # Configuraciones del modelo
+│   │   │   └── xgboost_config.py         # Configuraciones del modelo
 │   │   ├── training/
-│   │   │   └── xgboost_trainer.py # Pipeline de entrenamiento
+│   │   │   └── xgboost_trainer.py        # Pipeline de entrenamiento
 │   │   ├── models/
-│   │   │   └── enhanced_xgboost.py # Modelo XGBoost mejorado
+│   │   │   └── enhanced_xgboost.py       # Modelo XGBoost mejorado
 │   │   └── evaluation/
-│   │       └── xgboost_evaluator.py # Evaluación y métricas
-│   └── frontend/                  # Aplicación Next.js
-│       ├── app/                   # Estructura App Router de Next.js
-│       │   ├── api/               # API Routes de Next.js
-│       │   │   ├── demo-examples/ # Ejemplos de demostración
-│       │   │   ├── health/        # Endpoint de estado
-│       │   │   ├── predict/       # Endpoint de predicción
-│       │   │   └── statistics/    # Endpoint de estadísticas
-│       │   ├── page.tsx           # Página principal del dashboard
-│       │   └── layout.tsx         # Layout principal
-│       ├── components/            # Componentes React reutilizables
-│       │   └── ui/                # Componentes de interfaz 
-│       ├── lib/                   # Utilidades y funciones auxiliares
-│       └── public/                # Archivos estáticos
-├── run_xgboost_pipeline.py        # Script principal para entrenamiento y evaluación
-├── start.sh                       # Script para iniciar API y frontend
-└── requirements.txt               # Dependencias del proyecto
+│   │       └── xgboost_evaluator.py      # Evaluación y métricas
+│   └── frontend/                         # Aplicación Next.js (Dashboard)
+│       ├── app/                          # Estructura App Router de Next.js
+│       │   ├── api/                      # API Routes de Next.js (solo frontend)
+│       │   │   ├── demo-examples/        # Ejemplos de demostración
+│       │   │   ├── health/               # Endpoint de estado
+│       │   │   ├── predict/              # Endpoint de predicción
+│       │   │   └── statistics/           # Endpoint de estadísticas
+│       │   ├── page.tsx                  # Página principal del dashboard
+│       │   └── layout.tsx                # Layout principal
+│       ├── components/                   # Componentes React reutilizables
+│       │   └── ui/                       # Componentes de interfaz 
+│       ├── lib/                          # Utilidades y funciones auxiliares
+│       └── public/                       # Archivos estáticos
+├── run_xgboost_pipeline.py               # Script principal para entrenamiento y evaluación
+├── start.sh                              # Script para iniciar API y frontend
+└── requirements.txt                      # Dependencias del proyecto
 ```
 
-## Instalación
+**Despliegue en producción:**
+- **Frontend (Next.js):** https://ai-data-challenge.vercel.app/
+- **API Flask:** https://ai-data-challenge-9e5b.onrender.com/api/health
 
-### Requisitos del sistema
-
-- Python 3.9+
-- Node.js 18+ (para el frontend)
-- pip (gestor de paquetes de Python)
-- npm (gestor de paquetes de Node.js)
-
-### Métodos de instalación
-
-#### Método 1: Script automatizado (recomendado)
-
-El script `start.sh` automatiza todo el proceso de instalación e inicio:
-
-```bash
-# Ejecutar el script automatizado
-bash start.sh
-```
-
-Este script realiza las siguientes tareas:
-1. Crea un entorno virtual de Python
-2. Instala todas las dependencias de Python
-3. Verifica la instalación de XGBoost
-4. Instala las dependencias de Next.js
-5. Inicia tanto el API Flask como el frontend Next.js
-
-#### Método 2: Instalación manual
-
-Si prefieres instalar manualmente:
-
-1. Crear y activar un entorno virtual:
-
-```bash
-python3 -m venv venv
-source venv/bin/activate  # En Windows: venv\Scripts\activate
-```
-
-2. Instalar dependencias de Python:
-
-```bash
-pip install -r requirements.txt
-```
-
-3. Verificar instalación de XGBoost:
-
-```bash
-python -c "import xgboost; print(f'XGBoost version: {xgboost.__version__}')"
-```
-
-4. Instalar dependencias del frontend:
-
-```bash
-cd src/frontend
-npm install
-```
-
-5. Iniciar servicios por separado:
-
-```bash
-# Terminal 1: API
-cd src/api
-python api.py
-
-# Terminal 2: Frontend
-cd src/frontend
-npm run dev
-```
+El frontend y backend están desplegados por separado. El dashboard Next.js consume la API Flask pública para predicciones y métricas.
 
 # Uso del backend para manipular el modelo
 
@@ -343,7 +271,7 @@ python run_xgboost_pipeline.py evaluate --model-path models/xgboost_model.pkl
 
 Con comparación baseline:
 ```bash
-python run_xgboost_pipeline.py evaluate --model-path models/xgboost_model.pkl --baseline-results results/baseline_results.json
+python run_xgboost_pipeline.py evaluate --model-path models/xgboost_model.pkl --baseline-results src/backend/results/baseline_results.json
 ```
 
 ### 3. Analizar el Modelo
@@ -364,7 +292,6 @@ python run_xgboost_pipeline.py analyze --model-path models/xgboost_model.pkl --i
 ```
 
 ### 4. Comparar Configuraciones
-
 ```bash
 python run_xgboost_pipeline.py compare-configs
 ```
@@ -431,19 +358,19 @@ if XGBOOST_AVAILABLE:
 ## Salidas y Resultados
 
 ### Archivos generados durante entrenamiento:
-- `models/xgboost_model.pkl`: Modelo entrenado completo
-- `results/xgboost_results.json`: Métricas detalladas
-- `results/xgboost_training_YYYYMMDD_HHMMSS.log`: Log de entrenamiento
+- `src/backend/models/xgboost_model.pkl`: Modelo entrenado completo
+- `src/backend/results/xgboost_results.json`: Métricas detalladas
+- `src/backend/results/xgboost_training_YYYYMMDD_HHMMSS.log`: Log de entrenamiento
 
 ### Archivos generados durante evaluación:
-- `results/xgboost_comprehensive_evaluation.png`: Visualizaciones
-- `results/xgboost_detailed_evaluation.json`: Métricas detalladas
-- `results/xgboost_evaluation_summary.txt`: Resumen legible
-- `results/xgboost_feature_importance.png`: Importancia de características
+- `src/backend/results/xgboost_comprehensive_evaluation.png`: Visualizaciones
+- `src/backend/results/xgboost_detailed_evaluation.json`: Métricas detalladas
+- `src/backend/results/xgboost_evaluation_summary.txt`: Resumen legible
+- `src/backend/results/xgboost_feature_importance.png`: Importancia de características
 
 ### Archivos generados durante análisis:
-- `results/shap_explanation_[class].png`: Explicaciones SHAP
-- `results/xgboost_confusion_matrices.png`: Matrices de confusión
+- `src/backend/results/shap_explanation_[class].png`: Explicaciones SHAP
+- `src/backend/results/xgboost_confusion_matrices.png`: Matrices de confusión
 
 ## Métricas Evaluadas
 
@@ -464,7 +391,7 @@ if XGBOOST_AVAILABLE:
 - **Label Ranking Loss**: Error de ranking
 - **Frecuencia de etiquetas**: Distribución real vs predicha
 
-## 🧪 Uso Avanzado del Pipeline
+## Uso Avanzado del Pipeline
 
 La herramienta de línea de comandos `run_xgboost_pipeline.py` permite realizar diversas operaciones:
 
@@ -502,23 +429,6 @@ python run_xgboost_pipeline.py evaluate --model-path models/xgboost_model.pkl --
 # Análisis SHAP para explicaciones
 python run_xgboost_pipeline.py analyze --model-path models/xgboost_model.pkl --interactive
 ```
-
-#  Contribuciones
-
-¡Las contribuciones son bienvenidas! Sigue estos pasos:
-
-1. Fork el repositorio
-2. Crea una rama (`git checkout -b feature/nueva-funcionalidad`)
-3. Haz commit de tus cambios (`git commit -m 'Añadir nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Abre un Pull Request
-
-## Guías para contribuir
-
-- Mantén el estilo de código consistente
-- Añade tests para nuevas funcionalidades
-- Actualiza la documentación según sea necesario
-- Sigue las convenciones de commits semánticos
 
 ## Licencia
 

@@ -76,7 +76,7 @@ class XGBoostTrainer:
             level=logging.INFO,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
             handlers=[
-                logging.FileHandler(f'logs/xgboost_training_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
+                logging.FileHandler(f'src/backend/logs/xgboost_training_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'),
                 logging.StreamHandler()
             ]
         )

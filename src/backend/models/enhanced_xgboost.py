@@ -34,7 +34,7 @@ except ImportError:
     SHAP_AVAILABLE = False
     print("XGBoost or SHAP not available. Install with: pip install xgboost shap")
 
-from src.backend.config.xgboost_config import XGBoostConfig
+from config.xgboost_config import XGBoostConfig
 
 
 class EnhancedXGBoostModel:
